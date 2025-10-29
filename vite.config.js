@@ -17,7 +17,7 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()],
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver({ importStyle: 'sass' })],
     }),
   ],
   resolve: {
@@ -26,4 +26,13 @@ export default defineConfig({
     },
   },
 
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `
+       @use "@/styles/element/index.scss" as *;
+      `
+      }
+    }
+  }
 })
