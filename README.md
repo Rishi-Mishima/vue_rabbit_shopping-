@@ -46,4 +46,4 @@ npm run build
 ```sh
 npm run lint
 ```
->>>>>>> 5d782c2 (the structure of the project finished)
+

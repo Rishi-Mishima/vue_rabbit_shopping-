@@ -18,7 +18,20 @@ export default defineConfig([
       },
     },
   },
+  {
+    files: ['**/*.vue'],
+    rules: {
+      'vue/multi-word-component-names': 'off'
+    }
+  },
 
   js.configs.recommended,
   ...pluginVue.configs['flat/essential'],
+  {
+    languageOptions: { globals: globals.browser },
+    rules: {
+      // turn off the multi-word rule globally
+      'vue/multi-word-component-names': 'off',
+    },
+  },
 ])
