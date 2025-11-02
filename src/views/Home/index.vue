@@ -4,7 +4,7 @@ import HomeBanner from './components/HomeBanner.vue'
 import HomeNew from './components/HomeNew.vue'
 import HomeHot from './components/HomeHot.vue'
 import homeProduct from './components/HomeProduct.vue'
-import HomePanel from './components/HomePanel.vue'
+//import HomePanel from './components/HomePanel.vue'
 
 </script>
 
@@ -18,7 +18,7 @@ import HomePanel from './components/HomePanel.vue'
   <homeProduct />
 
 
-  <HomePanel title = '新鲜好物' sub-title="新鲜美妙 好物商品">
+  <!-- <HomePanel title = '新鲜好物' sub-title="新鲜美妙 好物商品">
 
 
   </HomePanel>
@@ -27,5 +27,5 @@ import HomePanel from './components/HomePanel.vue'
   <HomePanel title = '人气推荐' sub-title="人气推荐 爆款商品" >
 
     
-  </HomePanel>
+  </HomePanel> -->
 </template>
