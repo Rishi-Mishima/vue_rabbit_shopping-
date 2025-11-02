@@ -1,4 +1,5 @@
 import httpInstance from '@/utils/http';
+//import { httpInstance } from 'vue';
 
 
 //封装Banner接口
@@ -17,5 +18,11 @@ export function getBannerAPI() {
 export const findNewAPI = () => {
     return httpInstance({
         url: '/home/new'
+    })
+}
+
+export const findHotAPI = () => {
+    return httpInstance({
+        url: '/home/hot'
     })
 }
