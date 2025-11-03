@@ -1,3 +1,3 @@
 <template>
-    我是Product
+    我是Product -- template rewrite 
 </template>
