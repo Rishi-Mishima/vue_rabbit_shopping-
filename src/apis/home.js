@@ -27,8 +27,8 @@ export const findHotAPI = () => {
     })
 }
 
-export const findProductsAPI = () => {
+export const getGoodsAPI = () => {
     return httpInstance({
-        url: '/home/category/head'
+        url: 'home/goods'
     })
 }
