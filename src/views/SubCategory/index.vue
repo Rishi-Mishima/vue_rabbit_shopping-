@@ -28,6 +28,17 @@ const getGoodList = async ()=>{
   goodList.value = res.data.result.items
 }
 onMounted(()=> getGoodList())
+
+//handleChange 
+
+const handleClick=()=>{
+console.log('the tab has been clicked and changed', reqData.value.sortFiled);
+
+// 初始化Page
+reqData.value.page = 1;
+getGoodList()
+
+}
 </script>
 
 <template>
@@ -42,7 +53,8 @@ onMounted(()=> getGoodList())
       </el-breadcrumb>
     </div>
     <div class="sub-container">
-      <el-tabs>
+      <el-tabs v-model="reqData.sortFiled"  @tab-click="handleClick"> 
+        <!-- 接口文档 -->
         <el-tab-pane label="最新商品" name="publishTime"></el-tab-pane>
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
