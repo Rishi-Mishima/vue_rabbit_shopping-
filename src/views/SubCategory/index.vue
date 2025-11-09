@@ -5,7 +5,9 @@ import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import GoodsItem from '../Home/components/GoodsItem.vue'
 
-const categoryData = ref({})
+
+
+const categoryData = ref([])
 const route = useRoute()
 const getCategroyData =async ()=>{
    const res = await getCategoryFilterAPI(route.params.id)
@@ -15,12 +17,12 @@ const getCategroyData =async ()=>{
 onMounted(()=> getCategroyData())
 
 // 获取基础列表数据渲染
-const goodList = ref({})
+const goodList = ref([])
 const reqData = ref({
-    cateGoryId: route.params.id,
+    categoryId: route.params.id,
     page: 1,
     pageSize: 20,
-    sortFiled: 'publishTime'
+   sortField: 'publishTime'
 })
 const getGoodList = async ()=>{
   const res= await getSubCategoryAPI(reqData.value)
@@ -40,9 +42,25 @@ getGoodList()
 
 }
 
-const load = ()=>{
+   const disabled = ref(false)
+const load = async ()=>{
     console.log('load more more more...');
+
+    //  获取 下一页的数据
+    reqData.value.page++
+    //新老数据拼接
+     const res= await getSubCategoryAPI(reqData.value)
+     goodList.value = [...goodList.value,...res.data.result.items]
+
+     console.log(res.data.result.items);
+     
+  
+     if(res.data.result.items.length < reqData.value.pageSize){
+    disabled.value = true}
+
     
+
+ 
 }
 </script>
 
@@ -64,7 +82,8 @@ const load = ()=>{
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body" v-infinite-scroll="load" >
+      <div class="body" v-infinite-scroll="load"
+      :infinite-scroll-disabled="disabled" >
          <!-- 商品列表-->
 
     <GoodsItem v-for="goods in goodList" :goods="goods" :key ="goods.id"></GoodsItem>
