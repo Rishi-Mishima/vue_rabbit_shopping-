@@ -1,17 +1,37 @@
 <script setup>
+import { getDetail} from '@/apis/detail'
+//import { get } from '@vueuse/core'
+import {ref, onMounted} from 'vue'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
+
+const goods = ref({})
+const getGoods = async ()=>{
+   const res = await getDetail(route.params.id)
+
+   goods.value = res.data.result
+
+}
+
+onMounted(()=> getGoods())
 
 </script>
 
 <template>
   <div class="xtx-goods-page">
-    <div class="container">
+    <div class="container" v-if="goods.details">
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/' }">母婴
-          </el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/' }">跑步鞋
+          <!-- <el-breadcrumb-item :to="{ path: `category/${goods.categories?.[1].id}` }">{{ goods.categories?.[1].name }}
+          </el-breadcrumb-item> -->
+
+          <!-- 方法一： 可选链 
+          方法二： v-if  -->
+          <el-breadcrumb-item :to="{ path: `category/${goods.categories[1].id}` }">{{ goods.categories[1].name }}
+          </el-breadcrumb-item> 
+          <el-breadcrumb-item :to="{ path: `category/${goods.categories[0].id}` }">{{ goods.categories[0].name }}
           </el-breadcrumb-item>
           <el-breadcrumb-item>抓绒保暖，毛毛虫子儿童运动鞋</el-breadcrumb-item>
         </el-breadcrumb>
@@ -21,7 +41,7 @@
         <div>
           <div class="goods-info">
             <div class="media">
-                
+
               <!-- 图片预览区 -->
 
               <!-- 统计数量 -->
