@@ -30,7 +30,7 @@ const enterHandler =(i)=>{
     </div>
     <!-- 小图列表 -->
     <ul class="small">
-      <li v-for="(img, i) in imageList" :key="i" @mouseenter="enterHandler(i)">
+      <li v-for="(img, i) in imageList" :key="i" @mouseenter="enterHandler(i)" :class="{active:i===activeIndex}">
         <img :src="img" alt="" />
       </li>
     </ul>
