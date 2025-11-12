@@ -47,7 +47,7 @@ onMounted(()=> getGoods())
 
               <!-- 图片预览区 -->
 
-            <ImageView></ImageView>
+            <ImageView :image-list="goods.mainPictures"></ImageView>
               <!-- 统计数量 -->
               <ul class="goods-sales">
                 <li>
