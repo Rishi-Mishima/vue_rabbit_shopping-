@@ -35,3 +35,8 @@ app.mount('#app')
 import { lazyPlugin } from './directives '
 
 app.use(lazyPlugin)
+
+//
+import { componentPlugin } from '@/components'
+
+app.use(componentPlugin)

@@ -1,13 +1,13 @@
 <script setup>
 import { getDetail} from '@/apis/detail'
 
-import ImageView from '@/components/ImageView/index.vue'
+//import ImageView from '@/components/ImageView/index.vue'
 //import { get } from '@vueuse/core'
 import {ref, onMounted} from 'vue'
 import { useRoute } from 'vue-router'
 import DetailHot from './components /DetailHot.vue'
 
-import XtxSku from '@/components/XtxSku/index.vue'
+//import XtxSku from '@/components/XtxSku/index.vue'
 
 const route = useRoute()
 
@@ -56,7 +56,7 @@ const skuChange =(sku)=>{
 
               <!-- 图片预览区 -->
 
-            <ImageView :image-list="goods.mainPictures"></ImageView>
+            <XtxImageView :image-list="goods.mainPictures"></XtxImageView>
               <!-- 统计数量 -->
               <ul class="goods-sales">
                 <li>
