@@ -1,5 +1,7 @@
 <script setup>
 import { getDetail} from '@/apis/detail'
+
+import ImageView from '@/components/ImageView/index.vue'
 //import { get } from '@vueuse/core'
 import {ref, onMounted} from 'vue'
 import { useRoute } from 'vue-router'
@@ -45,6 +47,7 @@ onMounted(()=> getGoods())
 
               <!-- 图片预览区 -->
 
+            <ImageView></ImageView>
               <!-- 统计数量 -->
               <ul class="goods-sales">
                 <li>
