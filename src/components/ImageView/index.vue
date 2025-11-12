@@ -25,6 +25,9 @@ const { elementX,elementY} = useMouseInElement(target)
 const left = ref(0)
 const top = ref(0)
 
+const positionX = ref(0)
+const positionY = ref(0)
+
 // 用watch监听鼠标变化
 watch([elementX,elementY], ()=>{
   console.log('the xy has changed ');
@@ -52,6 +55,11 @@ watch([elementX,elementY], ()=>{
   if(elementY <100){
     top.value = 0
   }
+
+  //  控制大图显示
+  positionX.value = - left.value  * 2
+  positionY.value = - top.value  * 2
+
 })
 </script>
 
@@ -75,10 +83,10 @@ watch([elementX,elementY], ()=>{
     <div class="large" :style="[
       {
         backgroundImage: `url(${imageList[0]})`,
-        backgroundPositionX: `0px`,
-        backgroundPositionY: `0px`,
+        backgroundPositionX: `${positionX}px`,
+        backgroundPositionY: `${positionY}px`,
       },
-    ]" v-show="false"></div>
+    ]" ></div>
   </div>
 </template>
 
