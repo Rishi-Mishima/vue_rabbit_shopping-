@@ -21,7 +21,7 @@ const enterHandler =(i)=>{
 
 // 获取鼠标相对位置
 const target = ref(null)
-const { elementX,elementY} = useMouseInElement(target)
+const { elementX,elementY, isOutside} = useMouseInElement(target)
 const left = ref(0)
 const top = ref(0)
 
@@ -29,7 +29,10 @@ const positionX = ref(0)
 const positionY = ref(0)
 
 // 用watch监听鼠标变化
-watch([elementX,elementY], ()=>{
+watch([elementX,elementY, isOutside], ()=>{
+
+  // 如果鼠标没有移入盒子里，就不执行逻辑
+  if(isOutside.value) return 
   console.log('the xy has changed ');
   //有效范围
   // x axis 
@@ -71,7 +74,7 @@ watch([elementX,elementY], ()=>{
     <div class="middle" ref="target">
       <img :src="imageList[activeIndex]" alt="" />
       <!-- 蒙层小滑块 -->
-      <div class="layer" :style="{ left: `${left}px`, top: `${top}px` }"></div>
+      <div class="layer" v-show="!isOutside" :style="{ left: `${left}px`, top: `${top}px` }"></div>
     </div>
     <!-- 小图列表 -->
     <ul class="small">
@@ -86,7 +89,7 @@ watch([elementX,elementY], ()=>{
         backgroundPositionX: `${positionX}px`,
         backgroundPositionY: `${positionY}px`,
       },
-    ]" ></div>
+    ]" v-show="!isOutside"></div>
   </div>
 </template>
 
