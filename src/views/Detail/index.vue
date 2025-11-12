@@ -130,10 +130,10 @@ onMounted(()=> getGoods())
             <div class="goods-aside">
 <!-- 
               24h -->
-                <DetailHot></DetailHot>
+                <DetailHot :hot-type="1"></DetailHot>
 
               <!-- week  -->
-                <DetailHot></DetailHot>
+                <DetailHot :hot-type="2"></DetailHot>
  
 
 
