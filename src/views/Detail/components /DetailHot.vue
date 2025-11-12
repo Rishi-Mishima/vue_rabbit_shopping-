@@ -1,4 +1,26 @@
 <script setup>
+//24 h 热榜， 获取数据 渲染模版
+import  {getHotGoodsAPI } from '@/apis/detail'
+
+import {ref, onMounted} from 'vue'
+
+import { useRoute } from 'vue-router'
+
+const route= useRoute()
+
+const hotList = ref({})
+
+const getHotList = async ()=>{
+    const res = await getHotGoodsAPI({
+        id: route.params.id,
+        type: 1,
+
+    })
+
+    hotList.value = res.data.result 
+}
+
+onMounted(()=> getHotList())
 
 </script>
 
@@ -7,11 +29,11 @@
   <div class="goods-hot">
     <h3>周日榜单</h3>
     <!-- 商品区块 -->
-    <RouterLink to="/" class="goods-item" v-for="item in 3" :key="item.id">
+    <RouterLink to="/" class="goods-item" v-for="item in hotList" :key="item.id">
       <img :src="item.picture" alt="" />
-      <p class="name ellipsis">一双男鞋</p>
-      <p class="desc ellipsis">一双好穿的男鞋</p>
-      <p class="price">&yen;200.00</p>
+      <p class="name ellipsis">{{ item.name }}</p>
+      <p class="desc ellipsis">{{item.desc}}</p>
+      <p class="price">&yen;{{item.price}}</p>
     </RouterLink>
   </div>
 </template>
