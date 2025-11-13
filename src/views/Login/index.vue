@@ -3,8 +3,17 @@ import {ref} from 'vue'
 import { acceptHMRUpdate } from 'pinia';
 import { triggerRef } from 'vue';
 
+import { loginAPI } from '@/apis/user';
+
+import 'element-plus/theme-chalk/el-message.css'
+import { ElMessage } from 'element-plus';
+
+import { useRouter } from 'vue-router';
+
 // 表单校验 (账户名 + 密码)
 //1. 准备表单对象
+
+const router= useRouter()
 
 const form = ref({
   account : '',
@@ -41,14 +50,30 @@ const rules={
 // 获取表单实例，做同一校验
 const formRef = ref(null)
 const doLogin=()=>{
+  const {account, password} = form.value 
+
   // 调用实例方法
-  formRef.value.validate((valid)=>{
+  formRef.value.validate(async (valid)=>{
     // valid: all things in the form passed - true 
 
     console.log(valid);
 
     if(valid){
       //todologin 
+    const res =  await loginAPI({account, password})
+      console.log(res);
+      
+      //1 . 提示用户   
+
+      ElMessage({type:'success', message:'登陆成功'})
+      //2.  跳转到首页
+      // 组合API 路由tiaozhuan
+
+      router.replace({path: '/'})
+      // 防止用户重复返回   
+
+      //push
+
     }
     
 
