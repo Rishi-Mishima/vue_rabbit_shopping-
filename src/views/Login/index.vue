@@ -61,7 +61,11 @@ const doLogin=()=>{
 
     console.log(valid);
 
-    if(valid){
+    // 🔎 调试：先看 userStore 里到底有啥
+    console.log('userStore 是：', userStore)
+    console.log('getUserInfo 是：', userStore.getUserInfo)
+
+    try{
       //todologin 
       //await userStore.getUserInfo(account, password)
 const res =  await loginAPI({account, password})
@@ -79,6 +83,9 @@ const res =  await loginAPI({account, password})
       console.log('userStore 是：', userStore)
 console.log('getUserInfo 是：', userStore.getUserInfo)
 
+    }catch (e) {
+      console.error('登录出错：', e)
+      ElMessage({ type: 'error', message: '登录失败，请稍后重试' })
     }
     
 
