@@ -1,6 +1,7 @@
 // axios封装
 
 import axios from 'axios'
+import { ElMessage } from 'element-plus';
 
 const httpInstance = axios.create({
     baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
@@ -17,14 +18,19 @@ httpInstance.interceptors.request.use(function (config) {
 });
 
 // 添加响应拦截器
-httpInstance.interceptors.response.use(function (response) {
-    // 2xx 范围内的状态码都会触发该函数。
-    // 对响应数据做点什么
-    return response;
-}, function (error) {
-    // 超出 2xx 范围的状态码都会触发该函数。
-    // 对响应错误做点什么
-    return Promise.reject(error);
-});
+httpInstance.interceptors.response.use(
+    res => {
+        return res.data   // 成功时把 data 返回给组件
+    },
+    err => {
+        // 报错信息可能在 err.response.data.message
+        ElMessage({
+            type: 'warning',
+            message: err.response?.data?.message || '请求失败'
+        })
+        return Promise.reject(err)
+    }
+)
+
 
 export default httpInstance 
