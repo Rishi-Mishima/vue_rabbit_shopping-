@@ -6,14 +6,21 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+
 import '@/styles/common.scss'
 
 //import { useIntersectionObserver } from '@vueuse/core'
 //import { shallowRef, useTemplateRef } from 'vue'
 
 const app = createApp(App)
+const pinia = createPinia(piniaPluginPersistedstate)
+app.use(pinia)
 
-app.use(createPinia())
+//app.use(createPinia())
+
+// 持久化插件
+//pinia.use.
 app.use(router)
 
 app.mount('#app')

@@ -1,9 +1,9 @@
 <script setup>
 import {ref} from 'vue'
-import { acceptHMRUpdate } from 'pinia';
-import { triggerRef } from 'vue';
+//import { acceptHMRUpdate } from 'pinia';
+//import { triggerRef } from 'vue';
 
-//import { loginAPI } from '@/apis/user';
+import { loginAPI } from '@/apis/user';
 
 import 'element-plus/theme-chalk/el-message.css'
 import { ElMessage } from 'element-plus';
@@ -12,7 +12,7 @@ import { useRouter } from 'vue-router';
 
 import { useUserStore } from '@/stores/user';
 
-const useStore = useUserStore()
+const userStore = useUserStore()
 // 表单校验 (账户名 + 密码)
 //1. 准备表单对象
 
@@ -63,9 +63,10 @@ const doLogin=()=>{
 
     if(valid){
       //todologin 
-      await useStore.getUserInfo({account,password})
+      //await userStore.getUserInfo(account, password)
+const res =  await loginAPI({account, password})
+      console.log(res);
       //1 . 提示用户   
-
       ElMessage({type:'success', message:'登陆成功'})
       //2.  跳转到首页
       // 组合API 路由tiaozhuan
@@ -74,6 +75,9 @@ const doLogin=()=>{
       // 防止用户重复返回   
 
       //push
+
+      console.log('userStore 是：', userStore)
+console.log('getUserInfo 是：', userStore.getUserInfo)
 
     }
     
