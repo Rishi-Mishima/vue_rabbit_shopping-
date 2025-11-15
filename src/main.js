@@ -1,5 +1,3 @@
-
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
@@ -13,9 +11,13 @@ import '@/styles/common.scss'
 //import { useIntersectionObserver } from '@vueuse/core'
 //import { shallowRef, useTemplateRef } from 'vue'
 
+
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+
 const app = createApp(App)
-const pinia = createPinia(piniaPluginPersistedstate)
 app.use(pinia)
+
 
 //app.use(createPinia())
 
