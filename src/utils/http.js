@@ -28,4 +28,19 @@ httpInstance.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 
+// 请求拦截器：每次请求都带上 token
+httpInstance.interceptors.request.use(
+    (config) => {
+        const token = sessionStorage.getItem('rabbit-token')
+        if (token) {
+            // 根据后端约定，有的写 Bearer，有的直接写 token
+            config.headers.Authorization = `Bearer ${token}`
+            // 或者：
+            // config.headers.token = token
+        }
+        return config
+    },
+    (error) => Promise.reject(error),
+)
+
 export default httpInstance 

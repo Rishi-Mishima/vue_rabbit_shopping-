@@ -1,13 +1,16 @@
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+//import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
 
+import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
-import '@/styles/common.scss'
+//import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
+import '@/styles/common.scss'
+const app = createApp(App)
 //import { useIntersectionObserver } from '@vueuse/core'
 //import { shallowRef, useTemplateRef } from 'vue'
 
@@ -15,7 +18,7 @@ import '@/styles/common.scss'
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 
-const app = createApp(App)
+
 app.use(pinia)
 
 

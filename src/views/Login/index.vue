@@ -16,6 +16,9 @@ const userStore = useUserStore()
 // 表单校验 (账户名 + 密码)
 //1. 准备表单对象
 
+
+
+
 const router= useRouter()
 
 const form = ref({
@@ -52,7 +55,7 @@ const rules={
 
 // 获取表单实例，做同一校验
 const formRef = ref(null)
-const doLogin=()=>{
+const doLogin= async ()=>{
   const {account, password} = form.value 
 
   // 调用实例方法
@@ -61,14 +64,12 @@ const doLogin=()=>{
 
     console.log(valid);
 
-    // 🔎 调试：先看 userStore 里到底有啥
-    console.log('userStore 是：', userStore)
-    console.log('getUserInfo 是：', userStore.getUserInfo)
+   
 
     try{
       //todologin 
-      //await userStore.getUserInfo(account, password)
-const res =  await loginAPI({account, password})
+      await userStore.getUserInfo(account, password)
+      const res =  await loginAPI({account, password})
       console.log(res);
       //1 . 提示用户   
       ElMessage({type:'success', message:'登陆成功'})
