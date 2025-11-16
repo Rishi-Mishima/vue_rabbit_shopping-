@@ -1,8 +1,10 @@
 // axios封装
 
 import axios from 'axios'
-//import { ElMessage } from 'element-plus';
-//import { useUserStore } from '@/stores/user';
+import { ElMessage } from 'element-plus';
+import { useUserStore } from '@/stores/user';
+import router from '@/router';
+
 
 const httpInstance = axios.create({
     baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
@@ -22,10 +24,17 @@ httpInstance.interceptors.request.use(function (config) {
 httpInstance.interceptors.response.use(function (response) {
     // 2xx 范围内的状态码都会触发该函数。
     // 对响应数据做点什么
+
+
     return response;
 }, function (error) {
     // 超出 2xx 范围的状态码都会触发该函数。
     // 对响应错误做点什么
+    const userStore = useUserStore();
+    if (error.status === 401) {
+        userStore.logout();
+        router.push('/login')
+    }
     return Promise.reject(error);
 });
 
