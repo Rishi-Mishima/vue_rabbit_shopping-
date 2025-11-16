@@ -1,10 +1,10 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 export const userCartStore = defineStore('cart', () => {
     // 从 sessionStorage 读取购物车数据
-    const cartList = ref(JSON.parse(sessionStorage.getItem('cart-list')) || [])
-
+    //const cartList = ref(JSON.parse(sessionStorage.getItem('cart-list')) || [])
+    const cartList = ref([])
 
     const addCart = (goods) => {
         console.log('添加', goods)
@@ -22,7 +22,7 @@ export const userCartStore = defineStore('cart', () => {
             cartList.value.push(goods)
         }
         // ⭐ 每次修改后，持久化存储
-        sessionStorage.setItem('cart-list', JSON.stringify(cartList.value))
+        //sessionStorage.setItem('cart-list', JSON.stringify(cartList.value))
     }
 
     const delCart = async (skuId) => {
@@ -33,9 +33,16 @@ export const userCartStore = defineStore('cart', () => {
         cartList.value.splice(idx, 1)
     }
 
+    // 购物车计算  数量。 总价 - 所有项count * price 
+
+
+    const allCount = computed(() => cartList.value.reduce((a, c) => a + c.count, 0))
+    const allPrice = computed(() => cartList.value.reduce((a, c) => a + c.count * c.price, 0))
     return {
         cartList,
         addCart,
-        delCart
+        delCart,
+        allCount,
+        allPrice
     }
 })
