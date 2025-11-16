@@ -23,7 +23,8 @@ export const useUserStore = defineStore(
             sessionStorage.setItem('rabbit-user', JSON.stringify(userInfo.value))
         }
 
-        // 3. 退出登录（可选）
+
+        // 3. 退出登录
         const logout = () => {
             userInfo.value = {}
             token.value = ''
