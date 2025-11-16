@@ -6,7 +6,7 @@ import { ref } from "vue";
 export const useUserStore = defineStore(
     'user',
     () => {
-        const userInfo = ref({})
+        const userInfo = ref(JSON.parse(sessionStorage.getItem('rabbit-user')) || {})
         const token = ref(sessionStorage.getItem('rabbit-token') || '') // 启动时从本地读一次
 
         const getUserInfo = async (account, password) => {
