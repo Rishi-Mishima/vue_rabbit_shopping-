@@ -28,6 +28,14 @@ const skuChange =(sku)=>{
   
 }
 
+
+// count 
+const count = ref([])
+
+const countChange =(count)=>{
+    console.log(count);
+    
+}
 </script>
 
 <template>
@@ -108,7 +116,7 @@ const skuChange =(sku)=>{
              
                  <XtxSku :goods="goods" @change="skuChange"></XtxSKu>
               <!-- 数据组件 -->
-
+                    <el-input-number v-model="count" @change="countChange" ></el-input-number>
               <!-- 按钮组件 -->
               <div>
                 <el-button size="large" class="btn">
