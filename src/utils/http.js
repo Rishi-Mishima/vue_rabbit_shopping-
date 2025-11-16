@@ -1,7 +1,8 @@
 // axios封装
 
 import axios from 'axios'
-import { ElMessage } from 'element-plus';
+//import { ElMessage } from 'element-plus';
+//import { useUserStore } from '@/stores/user';
 
 const httpInstance = axios.create({
     baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
@@ -28,9 +29,11 @@ httpInstance.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 
-// 请求拦截器：每次请求都带上 token
+// 请求拦截器：每次请求都带上 token - 并没有用Pinia 
 httpInstance.interceptors.request.use(
     (config) => {
+        // const userStore = useUserStore();
+        // const token = userStore.userInfo.token 
         const token = sessionStorage.getItem('rabbit-token')
         if (token) {
             // 根据后端约定，有的写 Bearer，有的直接写 token
