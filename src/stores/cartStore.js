@@ -3,8 +3,8 @@ import { computed, ref } from "vue";
 
 export const userCartStore = defineStore('cart', () => {
     // 从 sessionStorage 读取购物车数据
-    //const cartList = ref(JSON.parse(sessionStorage.getItem('cart-list')) || [])
-    const cartList = ref([])
+    const cartList = ref(JSON.parse(sessionStorage.getItem('cart-list')) || [])
+    //const cartList = ref([])
 
     const addCart = (goods) => {
         console.log('添加', goods)
@@ -22,7 +22,7 @@ export const userCartStore = defineStore('cart', () => {
             cartList.value.push(goods)
         }
         // ⭐ 每次修改后，持久化存储
-        //sessionStorage.setItem('cart-list', JSON.stringify(cartList.value))
+        sessionStorage.setItem('cart-list', JSON.stringify(cartList.value))
     }
 
     const delCart = async (skuId) => {
