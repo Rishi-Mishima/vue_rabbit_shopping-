@@ -8,7 +8,7 @@ const cartStore = userCartStore()
 <template>
   <div class="cart">
     <a class="curr" href="javascript:;">
-      <i class="iconfont icon-cart"></i><em>{{ cartStore.cartList.length }}</em>
+      <i class="iconfont icon-cart"></i><em>{{ cartStore.cartList?.length || 0 }}</em>
     </a>
     <div class="layer">
       <div class="list">
