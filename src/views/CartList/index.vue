@@ -1,5 +1,6 @@
 <script setup>
 import { userCartStore } from '@/stores/cartStore';
+import { all } from 'axios';
 const cartStore = userCartStore()
 
 // select
@@ -8,6 +9,10 @@ const singleCheck = (i,select)=>{
 
   // another parameter - skuId
   cartStore.singleCheck(i.skuId, select)
+}
+
+const allCheck=(select)=>{
+  cartStore.allChecked(select)
 }
 </script>
 
@@ -19,7 +24,10 @@ const singleCheck = (i,select)=>{
           <thead>
             <tr>
               <th width="120">
-                <el-checkbox/>
+               <!--  全选框 -->
+                <el-checkbox :model-value="cartStore.isAll" @change="allCheck"></el-checkbox>
+              
+                
               </th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>
