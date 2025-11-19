@@ -2,15 +2,25 @@ import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { useUserStore } from "./user";
 
-import { insertCartAPI, findNewCartListAPI } from '@/apis/cart'
+import { insertCartAPI, findNewCartListAPI, deleteCartListAPI } from '@/apis/cart'
+
+
+
 
 export const userCartStore = defineStore('cart', () => {
     const userStore = useUserStore()
     const isLogin = computed(() => userStore.userInfo.token)
 
     // 从 sessionStorage 读取购物车数据
-    const cartList = ref(JSON.parse(sessionStorage.getItem('cartList')) || [])
-    //const cartList = ref([])
+    //const cartList = ref(JSON.parse(sessionStorage.getItem('cartList')) || [])
+    const cartList = ref([])
+
+    // 获取最新购物车列表 action - 抽出重复代码
+    const updateNewList = async () => {
+        const res = findNewCartListAPI()
+        // 本地购物车列表 被 新接口购物车列表覆盖
+        cartList.value = res.result
+    }
 
     const addCart = async (goods) => {
         console.log('添加', goods)
@@ -25,10 +35,7 @@ export const userCartStore = defineStore('cart', () => {
 
             await insertCartAPI({ skuId, count })
 
-            // 获取的接口购物车列表
-            const res = findNewCartListAPI()
-            // 本地购物车列表 被 新接口购物车列表覆盖
-            cartList.value = res.result
+            updateNewList()
         } else {
             const item = cartList.value.find((item) => goods.skuId === item.skuId)
             if (item) {
@@ -45,12 +52,23 @@ export const userCartStore = defineStore('cart', () => {
     }
 
     const delCart = async (skuId) => {
-        // 思路：
-        // 1. 找到要删除项的下标值 - splice
-        // 2. 使用数组的过滤方法 - filter
-        const idx = cartList.value.findIndex((item) => skuId === item.skuId)
-        cartList.value.splice(idx, 1)
+        if (isLogin.value) {
+
+            // 接口
+            await deleteCartListAPI([skuId])
+            // 获取的接口购物车列表
+            updateNewList()
+        } else {
+            // 思路：
+            // 1. 找到要删除项的下标值 - splice
+            // 2. 使用数组的过滤方法 - filter
+            const idx = cartList.value.findIndex((item) => skuId === item.skuId)
+            cartList.value.splice(idx, 1)
+        }
+
     }
+
+
 
     // 购物车计算  数量。 总价 - 所有项count * price 
 
