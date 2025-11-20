@@ -2,6 +2,9 @@
 import { defineStore } from "pinia";
 import { loginAPI } from "@/apis/user";
 import { ref } from "vue";
+import { userCartStore } from "./cartStore";
+
+
 
 export const useUserStore = defineStore(
     'user',
@@ -30,6 +33,10 @@ export const useUserStore = defineStore(
             token.value = ''
             sessionStorage.removeItem('rabbit-token')
             sessionStorage.removeItem('rabbit-user')
+            const cartStore = userCartStore()
+            // clear cart 
+            cartStore.clearCart()
+
         }
         return {
             userInfo,

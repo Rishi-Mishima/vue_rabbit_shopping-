@@ -17,9 +17,14 @@ export const userCartStore = defineStore('cart', () => {
 
     // 获取最新购物车列表 action - 抽出重复代码
     const updateNewList = async () => {
-        const res = findNewCartListAPI()
+        const res = await findNewCartListAPI()
         // 本地购物车列表 被 新接口购物车列表覆盖
-        cartList.value = res.result
+        // 根据你项目实际结构选一个：
+        // 假设是 axios 标准返回：
+        const serverList = res.data?.result || res.result || []
+
+        // 确保是数组再赋值
+        cartList.value = Array.isArray(serverList) ? serverList : []
     }
 
     const addCart = async (goods) => {
@@ -68,7 +73,10 @@ export const userCartStore = defineStore('cart', () => {
 
     }
 
-
+    // clear cart after logging out 
+    const clearCart = () => {
+        cartList.value = []
+    }
 
     // 购物车计算  数量。 总价 - 所有项count * price 
 
@@ -106,6 +114,7 @@ export const userCartStore = defineStore('cart', () => {
         isAll,
         allChecked,
         selectedCount,
-        selectedPrice
+        selectedPrice,
+        clearCart
     }
 })
