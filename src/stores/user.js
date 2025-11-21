@@ -3,12 +3,16 @@ import { defineStore } from "pinia";
 import { loginAPI } from "@/apis/user";
 import { ref } from "vue";
 import { userCartStore } from "./cartStore";
+import { mergeCartAPI } from "@/apis/cart";
 
 
 
 export const useUserStore = defineStore(
     'user',
     () => {
+
+        const cartStore = userCartStore()
+
         const userInfo = ref(JSON.parse(sessionStorage.getItem('rabbit-user')) || {})
         const token = ref(sessionStorage.getItem('rabbit-token') || '') // 启动时从本地读一次
 
@@ -24,6 +28,18 @@ export const useUserStore = defineStore(
             sessionStorage.setItem('rabbit-token', token.value)
             // 如果你想把整个 userInfo 也存起来：
             sessionStorage.setItem('rabbit-user', JSON.stringify(userInfo.value))
+
+            // merge cart 
+            // 由MAP获得新数组
+            await mergeCartAPI(cartStore.cartList.map(item => {
+                return {
+                    skuId: item.skuId,
+                    selected: item.select,
+                    count: item.count
+                }
+            }))
+            //获得新数组
+            cartStore.updateNewList()
         }
 
 
@@ -33,7 +49,7 @@ export const useUserStore = defineStore(
             token.value = ''
             sessionStorage.removeItem('rabbit-token')
             sessionStorage.removeItem('rabbit-user')
-            const cartStore = userCartStore()
+
             // clear cart 
             cartStore.clearCart()
 
