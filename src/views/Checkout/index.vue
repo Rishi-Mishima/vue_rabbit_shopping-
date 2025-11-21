@@ -1,6 +1,20 @@
 <script setup>
-const checkInfo = {}  // 订单对象
-const curAddress = {}  // 地址对象
+import { getCheckInfoAPI } from '@/apis/checkout';
+import { onMounted, ref } from 'vue';
+const checkInfo = ref({}) // 订单对象
+const curAddress= ref({})  // 地址对象
+
+const getCheckInfo=async()=>{
+    const res = await getCheckInfoAPI()
+    checkInfo.value = res.data.result  
+    
+    // 适配默认地址
+    //isDefault == 0 
+    const item = checkInfo.value.userAddresses.find(item=>item.isDefault === 0)
+    curAddress.value = item 
+}
+
+onMounted(()=>getCheckInfo())
 
 </script>
 
