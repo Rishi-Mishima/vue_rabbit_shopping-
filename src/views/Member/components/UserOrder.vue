@@ -25,19 +25,26 @@ const params=ref({
 const getOrderList=async ()=>{
   const res = await getUserOrder(params.value)
   orderList.value = res.data.result.items
-  
+
 
 }
 
 onMounted(()=> getOrderList())
-// 订单列表
-//const orderList = []
+
+// tab change 
+
+const tabChange =(type)=>{
+  // type is the default parameter in Elment UI 
+  params.value.orderState = type
+  getOrderList()
+}
+
 
 </script>
 
 <template>
   <div class="order-container">
-    <el-tabs>
+    <el-tabs @tab-change="tabChange">
       <!-- tab切换 -->
       <el-tab-pane v-for="item in tabTypes" :key="item.name" :label="item.label" />
 
