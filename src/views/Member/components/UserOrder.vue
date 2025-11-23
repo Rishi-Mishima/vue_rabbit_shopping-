@@ -17,6 +17,7 @@ const tabTypes = [
 ]
 
 const orderList = ref([])
+const total = ref(0)
 const params=ref({
   orderState:0,
   page: 1,
@@ -25,7 +26,7 @@ const params=ref({
 const getOrderList=async ()=>{
   const res = await getUserOrder(params.value)
   orderList.value = res.data.result.items
-
+  total.value = res.data.result.counts 
 
 }
 
@@ -39,6 +40,11 @@ const tabChange =(type)=>{
   getOrderList()
 }
 
+const pageChange=(page)=>{
+  params.value.page = page 
+  getOrderList()
+
+}
 
 </script>
 
@@ -122,7 +128,8 @@ const tabChange =(type)=>{
           </div>
           <!-- 分页 -->
           <div class="pagination-container">
-            <el-pagination background layout="prev, pager, next" />
+            <!-- :page-size="params.value.pageSize"  -->
+            <el-pagination :total="total" :page-size="params.value.pageSize" @current-change = "pageChange" background layout="prev, pager, next" />
           </div>
         </div>
       </div>
