@@ -14,9 +14,11 @@
     </dl>
   </div>
 </template>
+
 <script>
 import { watchEffect } from 'vue'
 import getPowerSet from './power-set'
+
 const spliter = '★'
 // 根据skus数据得到路径字典对象
 const getPathMap = (skus) => {
