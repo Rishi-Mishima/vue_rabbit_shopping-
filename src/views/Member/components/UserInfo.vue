@@ -4,6 +4,14 @@ import {getLikeListAPI} from '@/apis/user'
 import { onMounted, ref } from 'vue';
 import GoodsItem from '@/views/Home/components/GoodsItem.vue';
 
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+
+const getMember =()=>{
+  router.push('/member')
+}
+
 
 const userStore =useUserStore()
 
@@ -27,8 +35,8 @@ onMounted(()=> getLikeList())
       </div>
       <h4>{{ userStore.userInfo?.account || '未登录用户' }}</h4>
     </div>
-    <div class="item">
-      <a href="javascript:;">
+    <div class="item" >
+      <a  @click="getMember" href="javascript:;" >
         <span class="iconfont icon-hy"></span>
         <p>会员中心</p>
       </a>
