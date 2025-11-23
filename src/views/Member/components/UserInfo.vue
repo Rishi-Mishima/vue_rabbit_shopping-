@@ -9,7 +9,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter()
 
 const getMember =()=>{
-  router.push('/member')
+  router.push('/member/user')
 }
 
 

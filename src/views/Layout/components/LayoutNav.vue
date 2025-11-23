@@ -8,7 +8,7 @@ const router = useRouter()
 //   拥有了用户数据
 const userStore= useUserStore()
 const getMember =()=>{
-  router.push('/member')
+  router.push('/member/user')
 }
 
 
